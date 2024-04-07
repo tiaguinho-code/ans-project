@@ -11,6 +11,7 @@ package-mode = false
 python = "^3.11"
 selenium = "^4.19.0"
 adhan-time = "^0.3.2"
+ipykernel = "^6.29.4"
 
 
 [tool.poetry.group.dev.dependencies]
