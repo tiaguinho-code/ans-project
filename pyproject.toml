@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ans-project"
+version = "0.1.0"
+description = "Project for the Ans class"
+authors = ["shuting"]
+license = "GPL"
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+selenium = "^4.19.0"
+adhan-time = "^0.3.2"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
