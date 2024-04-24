@@ -41,6 +41,22 @@ def print_video_info(driver):
     except Exception as e:
         print(f"An error occurred while fetching video info: {e}")
 
+def get_video_info(driver):
+    try:
+        title_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#title > h1 > yt-formatted-string'))
+        )
+        title = title_element.text
+
+        author_element = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'div#upload-info yt-formatted-string'))
+        )
+        author = author_element.text
+        current_video_url = driver.current_url
+        return {'Title': title, 'Channel': author, 'url': current_video_url}
+    except Exception as e:
+        print(f"An error occurred while fetching video info: {e}")
+
 
 def watch_next_video(driver):
     try:

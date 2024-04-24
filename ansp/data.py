@@ -40,3 +40,8 @@ def increment_run(config_file_path = 'runs/run_config.json'):
     # Save the updated configuration file
     with open(config_file_path, 'w') as f:
         json.dump(config, f)
+
+def save_videos(video_data):
+    # Create a new CSV file with the updated name
+    video_data.to_csv(f'runs/run{get_run_number()}.csv')
+        # Write your data to the CSV file...
