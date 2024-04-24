@@ -10,7 +10,7 @@ def main():
     yt.accept_cookies(driver)  # Handle cookies after navigating to the initial video
 
     for _ in range(num_videos):
-        yt.get_video_info(driver)  # Extract video info
+        yt.print_video_info(driver)  # Extract video info
         yt.watch_next_video(driver)  # Navigate to and play the next video
         time.sleep(5)  # Adjust as needed based on loading times
     
