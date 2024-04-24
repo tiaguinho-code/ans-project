@@ -2,10 +2,12 @@
 name = "ans-project"
 version = "0.1.0"
 description = "Project for the Ans class"
-authors = ["shuting"]
+authors = ["shuting, tiago"]
 license = "GPL"
 readme = "README.md"
-package-mode = false
+packages = [
+  {include = "ansp"}
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
