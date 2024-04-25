@@ -7,7 +7,7 @@ def create_json(config_file_path = 'runs/run_config.json'):
     """
     # Create the configuration dictionary
     config = {"run_number": 0}
-
+    os.mkdir("runs")
     # Open the JSON file for writing
     with open(config_file_path, 'w') as f:
         # Convert the dictionary to a JSON string and write it to the file
