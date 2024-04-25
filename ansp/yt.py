@@ -97,3 +97,20 @@ def skip_to_end(driver):
         driver.execute_script("document.querySelector('video').currentTime = arguments[0]", duration - 3)
     except Exception as e:
         print(f"An error occurred while trying to skip to the end: {e}")
+
+def training(list_of_videos, video_data, driver):
+    with open(list_of_videos, 'r') as f:
+        urls = [line.strip() for line in f.readlines()]
+    driver.get(urls[0])
+    accept_cookies(driver)  # Handle cookies after navigating to the initial video
+    skip_ads(driver)  # Skip any ads that may appear before the first video
+    
+    for url in urls[1:]:
+        driver.get(url)
+        skip_ads(driver)
+        print_video_info(driver)  # Print video info
+        video_data.loc[len(video_data)] = get_video_info(driver) # Add current video info to df
+        skip_to_end(driver)
+        print(video_data)
+        time.sleep(10)  # Adjust as needed based on loading times
+    # Watch all the training videos
