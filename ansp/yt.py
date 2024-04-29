@@ -105,12 +105,20 @@ def training(list_of_videos, video_data, driver):
     accept_cookies(driver)  # Handle cookies after navigating to the initial video
     skip_ads(driver)  # Skip any ads that may appear before the first video
     
-    for url in urls[1:]:
+    # Go through video list for algorithm training
+    for url in urls[0:]:
         driver.get(url)
+        try:
+            WebDriverWait(driver, 3).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ytp-play-button"))).click()
+        except TimeoutException:
+            print("Video didn't load in time.")
+        except Exception as e:
+            print(f"An error occured while trying to press play on the video: {e}")
         skip_ads(driver)
         print_video_info(driver)  # Print video info
         video_data.loc[len(video_data)] = get_video_info(driver) # Add current video info to df
         skip_to_end(driver)
         print(video_data)
         time.sleep(10)  # Adjust as needed based on loading times
-    # Watch all the training videos
+    print("===========================================\ntraining done\n===========================================")
