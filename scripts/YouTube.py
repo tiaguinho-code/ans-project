@@ -3,7 +3,7 @@ import time
 import argparse
 import pandas as pd
 
-def main(parser):
+def main(args):
     num_videos = 100  # Number of videos to watch
     data.increment_run()
     video_data = pd.DataFrame(columns=['Title', 'Channel', 'url'])
@@ -22,7 +22,8 @@ def main(parser):
     data.save_videos(video_data)
 
 parser = argparse.ArgumentParser(description="Do a Training Run on the YT algorithm and then see what videos it recommends.")
-parser.add_argument("--list", type=str, default="SVP1", help="define which video list is used for training")
+parser.add_argument("--list", "-l", type=str, default="SVP1", help="define which video list is used for training")
+parser.add_argument("--video_length", "-vl", type=str, default="5s", help="define how long a video runs for before the next gets clicked")
 args = parser.parse_args()
 if __name__ == "__main__":
-    main(parser)
+    main(args)
