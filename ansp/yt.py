@@ -4,7 +4,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from dateutil.parser import parse
 import time
+
 
 def setup_driver():
     # Setup the driver. Ensure that the 'chromedriver' executable is in your PATH.
@@ -122,7 +124,7 @@ def skip_to_end(driver):
     except Exception as e:
         print(f"An error occurred while trying to skip to the end: {e}")
 
-def training(list_of_videos, video_data, driver):
+def training(list_of_videos, video_data, driver, video_length):
     with open(list_of_videos, 'r') as f:
         urls = [line.strip() for line in f.readlines()]
     driver.get(urls[0])
@@ -142,5 +144,13 @@ def training(list_of_videos, video_data, driver):
         print_video_info(driver)  # Print video info
         video_data.loc[len(video_data)] = get_video_info(driver) # Add current video info to df
         skip_to_end(driver)
-        time.sleep(10)  # Adjust as needed based on loading times
+        time.sleep(video_length)  # Adjust as needed based on loading times
     print("===========================================\ntraining done\n===========================================")
+
+
+def parse_time(time_str):
+    try:
+        time = parse(time_str)
+        return (time.hour * 3600 + time.minute * 60 + time.second) if time else None
+    except ValueError:
+        return None
