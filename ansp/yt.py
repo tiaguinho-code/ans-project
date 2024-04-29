@@ -147,6 +147,8 @@ def training(list_of_videos, video_data, driver, video_length):
         time.sleep(video_length)  # Adjust as needed based on loading times
     print("===========================================\ntraining done\n===========================================")
 
+def delete_history(driver):
+    
 
 def parse_time(time_str):
     try:
