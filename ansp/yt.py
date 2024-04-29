@@ -19,7 +19,7 @@ def activate_history(driver):
     driver.get("https://consent.youtube.com/d?continue=https://www.youtube.com/index%3FthemeRefresh%3D1%26cbrd%3D1&gl=CH&m=0&pc=yt&oyh=1&cm=6&hl=en&src=4")
     try:
         # Wait for the history stuff to appear and click on 'On'
-        WebDriverWait(driver, 1.5).until(
+        WebDriverWait(driver, 2.5).until(
             EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'On')]"))
         ).click()
         print("Clicked 'On' on history dialog.")
@@ -29,7 +29,7 @@ def activate_history(driver):
         print(f"An error occurred while trying to handle the History: {e}")
     try:
         # Click on accept cookie stuff, so the history gets saved
-        WebDriverWait(driver, 0.3).until(
+        WebDriverWait(driver, 0.5).until(
             EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'Confirm your settings')]"))
         ).click()
         print("Clicked 'Accept all' on cookie dialog.")
@@ -53,12 +53,12 @@ def reject_cookies(driver):
 
 def print_video_info(driver):
     try:
-        title_element = WebDriverWait(driver, 10).until(
+        title_element = WebDriverWait(driver, 0.2).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '#title > h1 > yt-formatted-string'))
         )
         title = title_element.text
 
-        author_element = WebDriverWait(driver, 10).until(
+        author_element = WebDriverWait(driver, 0.2).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'div#upload-info yt-formatted-string'))
         )
         author = author_element.text
@@ -69,12 +69,12 @@ def print_video_info(driver):
 
 def get_video_info(driver):
     try:
-        title_element = WebDriverWait(driver, 10).until(
+        title_element = WebDriverWait(driver, 0.2).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '#title > h1 > yt-formatted-string'))
         )
         title = title_element.text
 
-        author_element = WebDriverWait(driver, 10).until(
+        author_element = WebDriverWait(driver, 0.2).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, 'div#upload-info yt-formatted-string'))
         )
         author = author_element.text
@@ -128,6 +128,7 @@ def training(list_of_videos, video_data, driver, video_length):
     with open(list_of_videos, 'r') as f:
         urls = [line.strip() for line in f.readlines()]
     driver.get(urls[0])
+    time.sleep(2)
     skip_ads(driver)  # Skip any ads that may appear before the first video
     
     # Go through video list for algorithm training
@@ -142,9 +143,11 @@ def training(list_of_videos, video_data, driver, video_length):
             print(f"An error occured while trying to press play on the video: {e}")
         skip_ads(driver)
         print_video_info(driver)  # Print video info
-        video_data.loc[len(video_data)] = get_video_info(driver) # Add current video info to df
+        info = get_video_info(driver) # Add current video info to df
+        info['Training'] = True
+        video_data.loc[len(video_data)] = info
+        time.sleep(video_length)  # Adjusts for how long the training videos run
         skip_to_end(driver)
-        time.sleep(video_length)  # Adjust as needed based on loading times
     print("===========================================\ntraining done\n===========================================")
 
 def parse_time(time_str):
