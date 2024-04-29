@@ -2,6 +2,7 @@
 runs
 runs/run_config.json
 runs/*
+scratch
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
