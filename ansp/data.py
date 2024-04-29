@@ -1,6 +1,7 @@
 import json
 import os
 
+
 def create_json(config_file_path = 'runs/run_config.json'):
     """
     create json file in runs/run_config.json with the number of current run set to zero

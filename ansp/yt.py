@@ -4,7 +4,9 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from dateutil.parser import parse
 import time
+
 
 def setup_driver():
     # Setup the driver. Ensure that the 'chromedriver' executable is in your PATH.
@@ -13,7 +15,31 @@ def setup_driver():
     driver = webdriver.Chrome(options=options)
     return driver
 
-def accept_cookies(driver):
+def activate_history(driver):
+    driver.get("https://consent.youtube.com/d?continue=https://www.youtube.com/index%3FthemeRefresh%3D1%26cbrd%3D1&gl=CH&m=0&pc=yt&oyh=1&cm=6&hl=en&src=4")
+    try:
+        # Wait for the history stuff to appear and click on 'On'
+        WebDriverWait(driver, 1.5).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'On')]"))
+        ).click()
+        print("Clicked 'On' on history dialog.")
+    except TimeoutException:
+        print("History dialog did not appear within the timeout period.")
+    except Exception as e:
+        print(f"An error occurred while trying to handle the History: {e}")
+    try:
+        # Click on accept cookie stuff, so the history gets saved
+        WebDriverWait(driver, 0.3).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'Confirm your settings')]"))
+        ).click()
+        print("Clicked 'Accept all' on cookie dialog.")
+    except TimeoutException:
+        print("History dialog did not appear within the timeout period.")
+    except Exception as e:
+        print(f"An error occurred while trying to handle the History: {e}")
+
+
+def reject_cookies(driver):
     try:
         # Wait for the cookie dialog to appear and click "Reject all". Adjust the selector as needed.
         WebDriverWait(driver, 10).until(
@@ -97,3 +123,34 @@ def skip_to_end(driver):
         driver.execute_script("document.querySelector('video').currentTime = arguments[0]", duration - 3)
     except Exception as e:
         print(f"An error occurred while trying to skip to the end: {e}")
+
+def training(list_of_videos, video_data, driver, video_length):
+    with open(list_of_videos, 'r') as f:
+        urls = [line.strip() for line in f.readlines()]
+    driver.get(urls[0])
+    skip_ads(driver)  # Skip any ads that may appear before the first video
+    
+    # Go through video list for algorithm training
+    for url in urls[0:]:
+        driver.get(url)
+        try:
+            WebDriverWait(driver, 3).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "button.ytp-play-button"))).click()
+        except TimeoutException:
+            print("Video didn't load in time.")
+        except Exception as e:
+            print(f"An error occured while trying to press play on the video: {e}")
+        skip_ads(driver)
+        print_video_info(driver)  # Print video info
+        video_data.loc[len(video_data)] = get_video_info(driver) # Add current video info to df
+        skip_to_end(driver)
+        time.sleep(video_length)  # Adjust as needed based on loading times
+    print("===========================================\ntraining done\n===========================================")
+
+
+def parse_time(time_str):
+    try:
+        time = parse(time_str)
+        return (time.hour * 3600 + time.minute * 60 + time.second) if time else None
+    except ValueError:
+        return None
