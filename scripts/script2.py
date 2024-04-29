@@ -7,6 +7,7 @@ def main():
     data.increment_run()
     video_data = pd.DataFrame(columns=['Title', 'Channel', 'url'])
     driver = yt.setup_driver()
+    yt.activate_history(driver)
     yt.training(driver=driver, video_data=video_data, list_of_videos="ViedoLists/SVP1") # Train YT Algorithm
     for _ in range(num_videos):
         yt.watch_next_video(driver)  # Navigate to and play the next video
