@@ -11,6 +11,8 @@ import time
 def setup_driver():
     # Setup the driver. Ensure that the 'chromedriver' executable is in your PATH.
     options = webdriver.ChromeOptions()
+    #Adding adblocker
+    options.add_extension("1.57.0_0.crx")
     options.add_argument("--start-maximized")  # Start maximized for better visibility
     driver = webdriver.Chrome(options=options)
     return driver
