@@ -131,9 +131,7 @@ def training(list_of_videos, video_data, driver, video_length):
     with open(list_of_videos, 'r') as f:
         urls = [line.strip() for line in f.readlines()]
     driver.get(urls[0])
-    time.sleep(2)
-    skip_ads(driver)  # Skip any ads that may appear before the first video
-    
+    time.sleep(2)    
     # Go through video list for algorithm training
     for url in urls[0:]:
         driver.get(url)
