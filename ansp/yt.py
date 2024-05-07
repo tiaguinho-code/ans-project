@@ -35,6 +35,7 @@ def activate_history(driver):
             EC.element_to_be_clickable((By.XPATH, "//button[contains(.,'Confirm your settings')]"))
         ).click()
         print("Clicked 'Accept all' on cookie dialog.")
+        time.sleep(1) # let the dialog run
     except TimeoutException:
         print("History dialog did not appear within the timeout period.")
     except Exception as e:
