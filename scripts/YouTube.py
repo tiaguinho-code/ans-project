@@ -3,26 +3,28 @@ import time
 import argparse
 import pandas as pd
 
-def save_video_data(driver, video_data):
-        info = yt.get_video_info(driver) # Add current video info to df
+def save_video_data(driver, video_data, video_list):
+        info = yt.get_video_info(driver, video_list) # Add current video info to df
         info['Training'] = False
         video_data.loc[len(video_data)] = info
         return video_data
 
 def main(args):
+    video_list = "ViedoLists/"+args.list
+    print(video_list)
     data.increment_run()
-    video_data = pd.DataFrame(columns=['Title', 'Channel', 'url', 'Training'])
+    video_data = pd.DataFrame(columns=['Title', 'Channel', 'url', 'video_list', 'Training'])
     chrome.clear_history() # Delete history and cookies
     driver = yt.setup_driver()
     yt.activate_history(driver)
-    yt.training(driver=driver, video_data=video_data, list_of_videos="ViedoLists/"+args.list, video_length = yt.parse_time(args.training_length)) # Train YT Algorithm
+    yt.training(driver=driver, video_data=video_data, list_of_videos=video_list, video_length = yt.parse_time(args.training_length)) # Train YT Algorithm
     for _ in range(args.num_videos):
         yt.skip_to_end(driver)
         yt.watch_next_video(driver)  # Navigate to and play the next video
         ## Start Video ##
         time.sleep(2)
         yt.print_video_info(driver)  # Print video info
-        video_data = save_video_data(driver, video_data)
+        video_data = save_video_data(driver, video_data, video_list=video_list)
         print(video_data)
         time.sleep(yt.parse_time(args.video_length))  
         ## Stop Video ##
