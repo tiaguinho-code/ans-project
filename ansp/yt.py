@@ -70,7 +70,7 @@ def print_video_info(driver):
     except Exception as e:
         print(f"An error occurred while fetching video info: {e}")
 
-def get_video_info(driver):
+def get_video_info(driver, video_list):
     try:
         title_element = WebDriverWait(driver, 0.2).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, '#title > h1 > yt-formatted-string'))
@@ -82,7 +82,7 @@ def get_video_info(driver):
         )
         author = author_element.text
         current_video_url = driver.current_url
-        return {'Title': title, 'Channel': author, 'url': current_video_url}
+        return {'Title': title, 'Channel': author, 'url': current_video_url, 'video_list': video_list[11:]}
     except Exception as e:
         print(f"An error occurred while fetching video info: {e}")
 
@@ -144,7 +144,7 @@ def training(list_of_videos, video_data, driver, video_length):
             print(f"An error occured while trying to press play on the video: {e}")
         skip_ads(driver)
         print_video_info(driver)  # Print video info
-        info = get_video_info(driver) # Add current video info to df
+        info = get_video_info(driver, list_of_videos) # Add current video info to df
         info['Training'] = True
         video_data.loc[len(video_data)] = info
         time.sleep(video_length)  # Adjusts for how long the training videos run
