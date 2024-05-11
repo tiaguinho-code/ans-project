@@ -13,6 +13,7 @@ def setup_driver():
     options = webdriver.ChromeOptions()
     #Adding adblocker
     options.add_extension("1.57.0_0.crx")
+    options.add_argument("--mute-audio")
     options.add_argument("--start-maximized")  # Start maximized for better visibility
     driver = webdriver.Chrome(options=options)
     return driver
@@ -150,10 +151,3 @@ def training(list_of_videos, video_data, driver, video_length):
         time.sleep(video_length)  # Adjusts for how long the training videos run
         skip_to_end(driver)
     print("===========================================\ntraining done\n===========================================")
-
-def parse_time(time_str):
-    try:
-        time = parse(time_str)
-        return (time.hour * 3600 + time.minute * 60 + time.second) if time else None
-    except ValueError:
-        return None
