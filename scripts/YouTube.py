@@ -35,13 +35,13 @@ def main(args):
 
 parser = argparse.ArgumentParser(description="Do a Training Run on the YT algorithm and then see what videos it recommends.")
 parser.add_argument("-l", "--list", type=str, default="SVP1", help="define which video list is used for training")
-parser.add_argument("-vl", "--video_length", type=str, default="10s", help=
-                    "define how long a video runs for before the next gets clicked, for example: '5s' or '2m'")
-parser.add_argument("-tl", "--training_length", type=str, default="20s", help=
-                    "define how long a training video runs for before the next gets clicked, for example: '5s' or '2m'")
+parser.add_argument("-vl", "--video_length", type=int, default="10", help=
+                    "define how long a video runs for before the next gets clicked, for example: '5' or '120'")
+parser.add_argument("-tl", "--training_length", type=int, default="20", help=
+                    "define how long a training video runs for before the next gets clicked, for example: '5' or '120'")
 parser.add_argument("-n", "--num_videos", type=int, default=20, help=
                     "How many videos will be watched after training")
-parser.add_argument("-wt", "--waiting_time", type=str, default="10s", help=
+parser.add_argument("-wt", "--waiting_time", type=int, default="10", help=
                     "How much time is waited after the video is skipped to the end")
 
 args = parser.parse_args()
