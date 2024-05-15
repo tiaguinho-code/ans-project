@@ -17,6 +17,7 @@ def main(args):
     video_data = pd.DataFrame(columns=['Title', 'Channel', 'url', 'video_list', 'Training'])
     chrome.clear_history() # Delete history and cookies
     driver = yt.setup_driver()
+    driver.set_window_position(+5000,1000)
     yt.activate_history(driver)
     yt.training(driver=driver, video_data=video_data, list_of_videos=video_list, video_length = (args.training_length)) # Train YT Algorithm
     for _ in range(args.num_videos):
