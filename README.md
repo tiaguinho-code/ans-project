@@ -19,6 +19,9 @@ To run thorough youtube you can use the YouTube.py script by executing `poetry r
 # Create a Graph of runs
 To create a graph of your different runs you must manually select the runs you want to plot in the runs directory and move/copy them to a directory you created in selected runs. Then you can Execute a script like the one found in scripts/create_graph.py (`poetry run python scripts/create_graph.py`) or use the Jupyter notebook in networkgraph/plot.ipynb.
 
+# Presentation
+The presentation can be found in this repo.
+
 # Stats
 The statistical analysis found in the presentation was done using the notebook statistics/stats.ipynb
 
