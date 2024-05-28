@@ -14,10 +14,10 @@ poetry install
 Once poetry installed all packages you can run python files by just running: `poetry run python path/to/script.py`. And if using Jupyter you can select the .venv/bin/python file for the kernel.
 
 # Create a Run in YouTube
-To run thorough youtube you can use the YouTube.py script by executing `poetry run python scripts/YouTube.py`. With `poetry run scripts/YouTube.py --help` you can see a list of arguments including how to specify a training list. To create a training list you can create a file in the VideoLists directory and fill it with YouTube urls.
+To run thorough youtube you can use the YouTube.py script by executing `poetry run python scripts/YouTube.py`. With `poetry run python scripts/YouTube.py --help` you can see a list of arguments including how to specify a training list. To create a training list you can create a file in the VideoLists directory and fill it with YouTube urls.
 
 # Create a Graph of runs
-To create a graph of your different runs you must manually select the runs you want to plot in the runs directory and move/copy them to a directory you created in selected runs. Then you can Execute a script like the one found in scripts/create_graph.py (`poetry run python scripts/create_graph.py`) or use the Jupyter notebook in networkgraph/plot.ipynb.
+To create a graph of your different runs you must manually select the runs you want to plot in the runs directory and move/copy them to a directory you created in 'selected_runs/'. Then you can execute a script like the one found in scripts/create_graph.py (`poetry run python scripts/create_graph.py`) or use the Jupyter notebook in networkgraph/plot.ipynb.
 
 # Presentation
 The presentation can be found in this repo.
