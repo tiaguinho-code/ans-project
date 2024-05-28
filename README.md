@@ -2,7 +2,7 @@
 Little project for our applied network sciences class
 
 # Goals
-We want to work on the same idea as this (study)[https://doi.org/10.1073/pnas.2313377121], which analysed whether the youtube algorithm leads to radicalization. We would like to explore the way political content on youtube networks and whether any structures emerge upon clicking on the next video starting from a certain point.
+We want to work on the same idea as this [study](https://doi.org/10.1073/pnas.2313377121), which analysed whether the youtube algorithm leads to radicalization. We would like to explore the way political content on youtube networks and whether any structures emerge upon clicking on the next video starting from a certain point.
 
 # Usage
 We used poetry with a venv in the project directory to manage all the packages. Just execute the following commands to make sure poetry is installed and a venv is initialzed: 
